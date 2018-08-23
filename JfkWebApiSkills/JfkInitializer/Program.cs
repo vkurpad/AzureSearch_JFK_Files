@@ -25,9 +25,10 @@ namespace JfkInitializer
         private const string IndexerName = "jfkindexer";
         private const string SynonymMapName = "cryptonyms";
         private const string BlobContainerNameForImageStore = "imagestoreblob";
+        private const string AnnotationContainerNameForImageStore = "annotations";
 
         // Set this to true to see additional debugging information in the console.
-        private static bool DebugMode = false;
+        private static bool DebugMode = true;
 
         // Set this to true if you would like this app to deploy the JFK files frontend to your Azure site.
         private static bool ShouldDeployWebsite = true;
@@ -185,6 +186,7 @@ namespace JfkInitializer
                     json = json.Replace("[AzureFunctionEndpointUrl]", String.Format("https://{0}.azurewebsites.net", ConfigurationManager.AppSettings["AzureFunctionSiteName"]));
                     json = json.Replace("[AzureFunctionDefaultHostKey]", _azureFunctionHostKey);
                     json = json.Replace("[BlobContainerName]", BlobContainerNameForImageStore);
+                    json = json.Replace("[AnnotationContainerName]", BlobContainerNameForImageStore);
                     string uri = String.Format("{0}/skillsets/{1}?api-version=2017-11-11-Preview", _searchServiceEndpoint, SkillSetName);
                     HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
                     HttpResponseMessage response = await _httpClient.PutAsync(uri, content);

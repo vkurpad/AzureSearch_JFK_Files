@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -96,6 +97,48 @@ namespace Microsoft.CognitiveSearch.WebApiSkills
 
             return (ActionResult)new OkObjectResult(response);
         }
+
+        [FunctionName("annotation-write")]
+        public static async Task<IActionResult> RunAnnotationStore([HttpTrigger(AuthorizationLevel.Function, "post", Route = null)]HttpRequest req, TraceWriter log, ExecutionContext executionContext)
+        {
+            WebApiSkillResponse response = new WebApiSkillResponse();
+            try
+            {
+                string skillName = executionContext.FunctionName;
+                //log.Info($" INFO --------- {skillName} - {req.Body.ToString()}");
+                StreamReader reader = new StreamReader(req.Body);
+                string reqBody = reader.ReadToEnd();
+                string blobStorageConnectionString = GetAppSetting("ADLStorageAccountConnectionString");
+                //log.Info($"ADLS Connection string  = {blobStorageConnectionString.Substring(0, 20)}");
+                string blobContainerName = String.IsNullOrEmpty(req.Headers["BlobContainerName"]) ? Config.AZURE_ANNOTATION_CONTAINER_NAME : (string)req.Headers["BlobContainerName"];
+                if (String.IsNullOrEmpty(blobStorageConnectionString) || String.IsNullOrEmpty(blobContainerName))
+                {
+                    return new BadRequestObjectResult($"{skillName} - Information for the blob storage account is missing");
+                }
+                AnnotationStore annotationStore = new AnnotationStore(blobStorageConnectionString, blobContainerName);
+                //log.Info($"AnnotationStore Container =  {annotationStore.libraryContainer}");
+                RunInfo runInfo = new RunInfo();
+                runInfo.corpus = Config.CORPUS;
+                JObject obj = JObject.Parse(reqBody);
+                runInfo.document = obj["values"][0]["data"]["fileName"].ToString();
+                runInfo.skill = skillName;
+                runInfo.runInstance = DateTime.Now;
+                WebApiResponseRecord outRecord = new WebApiResponseRecord() { RecordId = obj["values"][0]["recordId"].ToString()   };
+                string recUri = await annotationStore.SaveAnnotation(reqBody, Guid.NewGuid().ToString(), runInfo, false, "text/json");
+                outRecord.Data["annotationUri"] = recUri;
+                
+                response.Values.Add(outRecord);
+                return (ActionResult)new OkObjectResult(response);
+            }
+            catch(Exception ex)
+            {
+                log.Error($" ERROR  --------- Annotation Store - {ex.ToString()}");
+                return (ActionResult)new BadRequestResult();
+            }
+            
+            
+        }
+
 
         [FunctionName("hocr-generator")]
         public static IActionResult RunHocrGenerator([HttpTrigger(AuthorizationLevel.Function, "post", Route = null)]HttpRequest req, TraceWriter log, ExecutionContext executionContext)
