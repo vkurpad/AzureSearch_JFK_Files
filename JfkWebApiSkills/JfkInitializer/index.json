@@ -1,91 +1,101 @@
 ﻿{
-    "fields": [
-        {
-            "name": "id",
-            "type": "Edm.String",
-            "searchable": true,
-            "filterable": true,
-            "retrievable": true,
-            "sortable": true,
-            "facetable": false,
-            "key": true
-        },
-        {
-            "name": "fileName",
-            "type": "Edm.String",
-            "searchable": false,
-            "filterable": false,
-            "retrievable": true,
-            "sortable": false,
-            "facetable": false
-        },
-        {
-            "name": "metadata",
-            "type": "Edm.String",
-            "searchable": false,
-            "filterable": false,
-            "retrievable": true,
-            "sortable": false,
-            "facetable": false
-        },
-        {
-            "name": "text",
-            "type": "Edm.String",
-            "searchable": true,
-            "filterable": false,
-            "retrievable": true,
-            "sortable": false,
-            "facetable": false,
-            "synonymMaps": [
-                "[SynonymMapName]"
-            ]
-        },
-        {
-            "name": "entities",
-            "type": "Collection(Edm.String)",
-            "searchable": false,
-            "filterable": true,
-            "retrievable": true,
-            "sortable": false,
-            "facetable": true
-        },
-        {
-            "name": "cryptonyms",
-            "type": "Collection(Edm.String)",
-            "searchable": false,
-            "filterable": true,
-            "retrievable": true,
-            "sortable": false,
-            "facetable": true
-        },
-        {
-            "name": "demoBoost",
-            "type": "Edm.Int32",
-            "searchable": false,
-            "filterable": true,
-            "retrievable": true,
-            "sortable": false,
-            "facetable": false
-        },
-        {
-            "name": "demoInitialPage",
-            "type": "Edm.Int32",
-            "searchable": false,
-            "filterable": false,
-            "retrievable": true,
-            "sortable": false,
-            "facetable": false
-        },
-        {
-            "name": "enriched",
-            "type": "Edm.String",
-            "searchable": false,
-            "filterable": false,
-            "retrievable": true,
-            "sortable": false,
-            "facetable": false
-        }
-    ],
+  "fields": [
+    {
+      "name": "id",
+      "type": "Edm.String",
+      "searchable": true,
+      "filterable": true,
+      "retrievable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": true
+    },
+    {
+      "name": "fileName",
+      "type": "Edm.String",
+      "searchable": false,
+      "filterable": false,
+      "retrievable": true,
+      "sortable": false,
+      "facetable": false
+    },
+    {
+      "name": "metadata",
+      "type": "Edm.String",
+      "searchable": false,
+      "filterable": false,
+      "retrievable": true,
+      "sortable": false,
+      "facetable": false
+    },
+    {
+      "name": "text",
+      "type": "Edm.String",
+      "searchable": true,
+      "filterable": false,
+      "retrievable": true,
+      "sortable": false,
+      "facetable": false,
+      "synonymMaps": [
+        "[SynonymMapName]"
+      ]
+    },
+    {
+      "name": "entities",
+      "type": "Collection(Edm.String)",
+      "searchable": false,
+      "filterable": true,
+      "retrievable": true,
+      "sortable": false,
+      "facetable": true
+    },
+    {
+      "name": "cryptonyms",
+      "type": "Collection(Edm.String)",
+      "searchable": false,
+      "filterable": true,
+      "retrievable": true,
+      "sortable": false,
+      "facetable": true
+    },
+    {
+      "name": "demoBoost",
+      "type": "Edm.Int32",
+      "searchable": false,
+      "filterable": true,
+      "retrievable": true,
+      "sortable": false,
+      "facetable": false
+    },
+    {
+      "name": "demoInitialPage",
+      "type": "Edm.Int32",
+      "searchable": false,
+      "filterable": false,
+      "retrievable": true,
+      "sortable": false,
+      "facetable": false
+    },
+    {
+      "name": "enriched",
+      "type": "Edm.String",
+      "searchable": false,
+      "filterable": false,
+      "retrievable": true,
+      "sortable": false,
+      "facetable": false
+    },
+    {
+      "name": "enriched",
+      "type": "Edm.String",
+      "searchable": false,
+      "filterable": false,
+      "retrievable": true,
+      "sortable": false,
+      "facetable": false,
+      "key": false
+    }
+  ],
     "scoringProfiles": [
         {
             "name": "demoBooster",
