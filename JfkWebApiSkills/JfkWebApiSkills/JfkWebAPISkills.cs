@@ -108,7 +108,7 @@ namespace Microsoft.CognitiveSearch.WebApiSkills
                 //log.Info($" INFO --------- {skillName} - {req.Body.ToString()}");
                 StreamReader reader = new StreamReader(req.Body);
                 string reqBody = reader.ReadToEnd();
-                string blobStorageConnectionString = GetAppSetting("ADLStorageAccountConnectionString");
+                string blobStorageConnectionString = GetAppSetting("BlobStorageAccountConnectionString");
                 //log.Info($"ADLS Connection string  = {blobStorageConnectionString.Substring(0, 20)}");
                 string blobContainerName = String.IsNullOrEmpty(req.Headers["BlobContainerName"]) ? Config.AZURE_ANNOTATION_CONTAINER_NAME : (string)req.Headers["BlobContainerName"];
                 if (String.IsNullOrEmpty(blobStorageConnectionString) || String.IsNullOrEmpty(blobContainerName))
